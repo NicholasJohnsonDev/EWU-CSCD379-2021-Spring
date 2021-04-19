@@ -1,29 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>UserGroup - @ViewBag.Title</title>
+    <title>Secret Santa - @ViewBag.Title</title>
     <!-- Stylesheets -->
     <% for (var filename in htmlWebpackPlugin.files.css) { %>
-    <link href="~<%= htmlWebpackPlugin.files.css[filename] %>" rel="stylesheet" />
-    <% } %>
-    <!-- End Stylesheets -->
+        <link href="~<%= htmlWebpackPlugin.files.css[filename] %>" rel="stylesheet" />
+        <% } %>
+            <!-- End Stylesheets -->
 </head>
-<body>
-    <nav>
-        <ul>
-            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-            <li><a asp-controller="Users" asp-action="Index">Users</a></li>
-            <li><a asp-controller="Groups" asp-action="Index">Groups</a></li>
-            <li><a asp-controller="Gifts" asp-action="Index">Gifts</a></li>
-        </ul>
-    </nav>
-    @RenderBody()
 
+<body>
+    <div class="m-8">
+        <header class="bg-red-600 text-black flex flex-col sm:flex-row justify-between p-3 font-semibold">
+            <div class="flex flex-row justify-between">
+                <a class="mb-1 mr-4 text-2xl text-gray-800" asp-controller="Home" asp-action="Index">Secret
+                    Santa</a>
+                <button class="sm:hidden pr-3" onclick="SecretSanta.toggleMenu()"><i
+                        class="fas fa-bars text-2xl align-middle h-full"></i></button>
+            </div>
+            <nav id="headerNav" class="hidden sm:inline-block">
+                <ul class="flex flex-col sm:flex-row pb-1">
+                    <li class="px-4"><a class="mb-1 text-lg" asp-controller="Users" asp-action="Index">Users</a></li>
+                    <li class="px-4"><a class="mb-1 text-lg" asp-controller="Groups" asp-action="Index">Groups</a></li>
+                    <li class="px-4"><a class="mb-1 text-lg" asp-controller="Gifts" asp-action="Index">Gifts</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="text-gray-800 m-4">
+            @RenderBody()
+        </div>
+    </div>
     <!-- Scripts -->
     <% for (var index in htmlWebpackPlugin.files.js) { %>
-    <script src="~<%= htmlWebpackPlugin.files.js[index] %>"></script>
-    <% } %>
-    <!-- End Scripts -->
+        <script src="~<%= htmlWebpackPlugin.files.js[index] %>"></script>
+        <% } %>
+            <!-- End Scripts -->
 </body>
+
 </html>
