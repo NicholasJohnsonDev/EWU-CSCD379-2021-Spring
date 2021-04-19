@@ -7,5 +7,7 @@
 <form asp-controller="Users" asp-action="Create" method="post">
     @await Html.PartialAsync("_CreateOrEdit")
     <button>Create</button>
-    <a asp-controller="Users" asp-action="Index">Cancel</a>
+    <form asp-controller="Users" asp-action="Index" method="get">
+        <button>Cancel</button>
+    </form>
 </form>

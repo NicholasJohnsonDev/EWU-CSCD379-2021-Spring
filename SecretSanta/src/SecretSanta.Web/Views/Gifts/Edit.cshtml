@@ -8,5 +8,7 @@
     <input type="hidden" asp-for="Id" />
     @await Html.PartialAsync("_CreateOrEdit")
     <button>Update</button>
-    <a asp-controller="Gifts" asp-action="Index">Cancel</a>
+    <form asp-controller="Gifts" asp-action="Index" method="get">
+        <button>Create</button>
+    </form>
 </form>

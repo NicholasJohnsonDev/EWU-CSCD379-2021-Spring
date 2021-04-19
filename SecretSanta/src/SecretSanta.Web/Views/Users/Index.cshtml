@@ -4,15 +4,22 @@
     int counter = 0;
     ViewBag.Title = "Users";
 }
+<section class="sm:grid grid-cols-3">
+    @foreach (var user in Model)
+    {
+        <section>
+            <a asp-controller="Users" asp-action="Edit" asp-route-id=@counter>@user.FirstName @user.LastName</a>
+            <form asp-controller="Users" asp-action="Delete" asp-route-id=@counter method="post">
+                <button onclick="return confirm('Are you sure you want to delete: @user.FirstName @user.LastName?');"><i
+                    class="fas fa-user-slash"></i></button>
+            </form>
+            @{
+                counter++;
+            }
+        </section>
+    }
+</section>
 
-@foreach (var userViewModel in Model)
-{
-    <section>
-        @userViewModel.FirstName @userViewModel.LastName <a asp-action="Edit" asp-route-id=@counter>Edit</a>
-        <form asp-action="Delete" asp-route-id=@counter method="post"><button>X</button></form>
-        @{
-            counter++;
-        }
-    </section>
-}
-<a asp-action="Create">Create</a>
+<form asp-controller="Users" asp-action="Create" method="get">
+    <button>Create</button>
+</form>

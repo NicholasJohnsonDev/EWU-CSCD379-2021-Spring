@@ -5,14 +5,21 @@
     int counter = 0;
 }
 
-@foreach (var GiftViewModel in Model)
-{
-    <section>
-        @GiftViewModel.Title @GiftViewModel.Priority <a asp-action="Edit" asp-route-id=@counter>Edit</a>
-        <form asp-action="Delete" asp-route-id=@counter method="post"><button>X</button></form>
-        @{
-            counter++;
-        }
-    </section>
-}
-<section><a asp-action="Create">Create</a></section>
+<section class="sm:grid grid-cols-3">
+    @foreach (var gift in Model)
+    {
+        <section>
+            <a asp-controller="Gifts" asp-action="Edit" asp-route-id=@counter>@gift.Title</a>
+            <form asp-controller="Gifts" asp-action="Delete" asp-route-id=@counter method="post">
+                <button onclick="return confirm('Are you sure you want to delete: @gift.Title?');"><i
+                    class="fas fa-backspace"></i></button>
+            </form>
+            @{
+                counter++;
+            }
+        </section>
+    }
+</section>
+<form asp-controller="Gifts" asp-action="Create" method="get">
+    <button>Create</button>
+</form>
