@@ -17,7 +17,7 @@
             <div class="flex flex-row justify-between">
                 <a class="mb-1 mr-4 text-2xl text-gray-800" asp-controller="Home" asp-action="Index">Secret
                     Santa</a>
-                <button class="sm:hidden pr-3" onclick="SecretSanta.toggleMenu()"><i
+                <button class="sm:hidden pr-3" onclick="toggleMenu()"><i
                         class="fas fa-bars text-2xl align-middle h-full"></i></button>
             </div>
             <nav id="headerNav" class="hidden sm:inline-block">
@@ -37,7 +37,22 @@
     <% for (var index in htmlWebpackPlugin.files.js) { %>
         <script src="~<%= htmlWebpackPlugin.files.js[index] %>"></script>
         <% } %>
+
+
+            <script>
+                function toggleMenu() {
+                    var headerNav = document.getElementById("headerNav");
+                    if (headerNav) {
+                        if (headerNav.classList.contains("hidden")) {
+                            headerNav.classList.remove("hidden");
+                        } else {
+                            headerNav.classList.add("hidden")
+                        }
+                    }
+                }
+            </script>
             <!-- End Scripts -->
+
 </body>
 
 </html>

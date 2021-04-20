@@ -7,7 +7,7 @@
 <section class="sm:grid grid-cols-3">
     @foreach (var user in Model)
     {
-        <section>
+        <section class="border-red-600 border-2 p-6 m-5 rounded-lg">
             <a asp-controller="Users" asp-action="Edit" asp-route-id=@counter>@user.FirstName @user.LastName</a>
             <form asp-controller="Users" asp-action="Delete" asp-route-id=@counter method="post">
                 <button onclick="return confirm('Are you sure you want to delete: @user.FirstName @user.LastName?');"><i

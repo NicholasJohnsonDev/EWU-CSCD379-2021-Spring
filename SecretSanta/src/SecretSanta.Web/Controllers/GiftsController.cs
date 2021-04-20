@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SecretSanta.Web.Data;
 using SecretSanta.Web.ViewModels;
+using System.Linq;
 
 namespace SecretSanta.Web.Controllers
 {
@@ -8,6 +9,7 @@ namespace SecretSanta.Web.Controllers
     {
         public IActionResult Index()
         {
+            MockData.Gifts = MockData.Gifts.OrderBy(item => item.Priority).ToList();
             return View(MockData.Gifts);
         }
 

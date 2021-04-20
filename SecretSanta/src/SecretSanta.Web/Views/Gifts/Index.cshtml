@@ -8,7 +8,7 @@
 <section class="sm:grid grid-cols-3">
     @foreach (var gift in Model)
     {
-        <section>
+        <section class="border-red-600 border-2 p-6 m-5 rounded-lg">
             <a asp-controller="Gifts" asp-action="Edit" asp-route-id=@counter>@gift.Title</a>
             <form asp-controller="Gifts" asp-action="Delete" asp-route-id=@counter method="post">
                 <button onclick="return confirm('Are you sure you want to delete: @gift.Title?');"><i
