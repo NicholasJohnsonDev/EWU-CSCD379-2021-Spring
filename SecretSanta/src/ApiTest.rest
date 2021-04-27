@@ -1,21 +1,41 @@
-@hostname = localhost @port = 5101 @host = https://{{hostname}}:{{port}} @contentType = application/json
+###
+@hostname = localhost 
+@port = 5101 
+@host = https://{{hostname}}:{{port}} 
+@contentType = application/json
 
-### GET {{host}}/api/users
+### 
+GET {{host}}/api/users
 
-### GET {{host}}/api/users/3
+### 
+GET {{host}}/api/users/2
 
-### DELETE {{host}}/api/users/0
-
-### DELETE {{host}}/api/users/1
-
-### POST {{host}}/api/users Content-Type: {{contentType}}
+### 
+POST {{host}}/api/users 
+Content-Type: {{contentType}}
 
 {
-"id" : 42, "firstName": "First Name Test", "lastName": "Last Name Test"
+"firstName": "First Name Test 0", "lastName": "Last Name Test 0", "id": 0
 }
 
-### PUT {{host}}/api/users/1 Content-Type: {{contentType}}
+### 
+POST {{host}}/api/users 
+Content-Type: {{contentType}}
+
+{
+"firstName": "First Name Test 2", "lastName": "Last Name Test 2", "id": 2
+}
+
+### 
+PUT {{host}}/api/users/2
+Content-Type: {{contentType}}
 
 {
 "firstName": "TesterFirst", "lastName": "TesterLast", "id" : 2
 }
+
+### 
+DELETE {{host}}/api/users/0
+
+### 
+DELETE {{host}}/api/users/2
