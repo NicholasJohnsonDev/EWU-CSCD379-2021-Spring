@@ -13,62 +13,85 @@ namespace SecretSanta.Business.Tests
     public class UserManagerTests
     {
         [TestMethod]
-        public void Create_WithUserData_ReturnsUserData()
+        [DataRow(42, "TestFirstName", "TestLastName")]
+        public void Create_WithUserData_ReturnsUserData(int id, String first, String last)
         {
+            // Arrange 
             UserManager manager = new();
-            User myUser = new User() { Id = 42, FirstName = "TestFirstName", LastName = "TestLastName" };
+            User myUser = new User() { Id = id, FirstName = first, LastName = last };
 
+            // Act
             User createdUser = manager.Create(myUser);
 
+            // Assert
             Assert.AreEqual(createdUser.Id, myUser.Id);
             Assert.AreEqual(createdUser.FirstName, myUser.FirstName);
-            Assert.AreEqual(createdUser.FirstName, myUser.FirstName);
+            Assert.AreEqual(createdUser.LastName, myUser.LastName);
         }
 
         [TestMethod]
-        public void GetItem_WithId_ReturnsCorrectUser()
+        [DataRow(42)]
+        public void GetItem_WithId_ReturnsCorrectUser(int id)
         {
+            // Arrange 
             UserManager manager = new();
-            User user = manager.GetItem(42);
 
-            Assert.AreEqual(user.Id, 42);
+            // Act
+            User user = manager.GetItem(id);
+
+            // Assert
+            Assert.AreEqual(user.Id, id);
         }
 
         [TestMethod]
         public void List_WithDataInList_ReturnsDataInList()
         {
+            // Arrange 
             UserManager manager = new();
             ICollection<User> expectedData = DeleteMe.Users;
+
+            // Act
             ICollection<User> listData = manager.List();
 
+            // Assert
             Assert.IsTrue(listData == expectedData);
         }
 
         [TestMethod]
-        public void Remove_WithId_ReturnsTrue()
+        [DataRow(1)]
+        public void Remove_WithId_ReturnsTrue(int id)
         {
+            // Arrange 
             UserManager manager = new();
 
-            Assert.IsTrue(manager.Remove(1));
+            // Act // Assert
+            Assert.IsTrue(manager.Remove(id));
         }
 
         [TestMethod]
-        public void Remove_OutOfRange_ReturnsFalse()
+        [DataRow(-1)]
+        [DataRow(99999)]
+        public void Remove_OutOfRange_ReturnsFalse(int id)
         {
+            // Arrange 
             UserManager manager = new();
 
-            Assert.IsFalse(manager.Remove(-1));
-            Assert.IsFalse(manager.Remove(99999));
+            // Act // Assert
+            Assert.IsFalse(manager.Remove(id));
         }
 
         [TestMethod]
-        public void Save_UserData_UpdatesUser()
+        [DataRow(1, "TestFirstName", "TestLastName")]
+        public void Save_UserData_UpdatesUser(int id, String first, String last)
         {
+            // Arrange
             UserManager manager = new();
-            User user = new User() { Id = 1, FirstName = "TestFirstName", LastName = "TestLastName" };
+            User user = new User() { Id = id, FirstName = first, LastName = last };
 
+            // Act
             manager.Save(user);
 
+            // Assert
             Assert.AreEqual(manager.GetItem(1).FirstName, user.FirstName);
             Assert.AreEqual(manager.GetItem(1).LastName, user.LastName);
         }

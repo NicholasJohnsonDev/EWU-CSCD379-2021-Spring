@@ -65,7 +65,7 @@ namespace SecretSanta.Api.Controllers
 
         // PUT /api/users/<id>
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody]UpdateUser? updatedUser)
+        public ActionResult Put(int id, [FromBody] UpdateUser? updatedUser)
         {
             if (updatedUser is null)
             {
@@ -74,9 +74,12 @@ namespace SecretSanta.Api.Controllers
             User? foundUser = UserManager.GetItem(id);
             if (foundUser is not null)
             {
-                if (!string.IsNullOrWhiteSpace(updatedUser.FirstName) && !string.IsNullOrWhiteSpace(updatedUser.LastName))
+                if (!string.IsNullOrWhiteSpace(updatedUser.FirstName))
                 {
                     foundUser.FirstName = updatedUser.FirstName;
+                }
+                if (!string.IsNullOrWhiteSpace(updatedUser.LastName))
+                {
                     foundUser.LastName = updatedUser.LastName;
                 }
 

@@ -13,25 +13,28 @@ GET {{host}}/api/users/2
 ### 
 POST {{host}}/api/users 
 Content-Type: {{contentType}}
-
 {
-"firstName": "First Name Test 0", "lastName": "Last Name Test 0", "id": 0
+    "id": 0,
+    "firstName": "First Name Test 0", 
+    "lastName": "Last Name Test 0"
 }
 
 ### 
 POST {{host}}/api/users 
 Content-Type: {{contentType}}
-
 {
-"firstName": "First Name Test 2", "lastName": "Last Name Test 2", "id": 2
+    "id": 2,
+    "firstName": "First Name Test 2", 
+    "lastName": "Last Name Test 2"
 }
 
 ### 
 PUT {{host}}/api/users/2
 Content-Type: {{contentType}}
-
 {
-"firstName": "TesterFirst", "lastName": "TesterLast", "id" : 2
+    "id" : 2,
+    "firstName": "TesterFirst", 
+    "lastName": "TesterLast"
 }
 
 ### 
