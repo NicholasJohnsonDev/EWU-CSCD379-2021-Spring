@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SecretSanta.Business;
 using SecretSanta.Data;
+using SecretSanta.Api.Dto;
 
 namespace SecretSanta.Api.Controllers
 {
@@ -19,12 +20,16 @@ namespace SecretSanta.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<User>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IEnumerable<User> Get()
         {
             return Repository.List();
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         public ActionResult<User?> Get(int id)
         {
             User? user = Repository.GetItem(id);
@@ -33,6 +38,8 @@ namespace SecretSanta.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult Delete(int id)
         {
             if (Repository.Remove(id))
@@ -43,6 +50,8 @@ namespace SecretSanta.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         public ActionResult<User?> Post([FromBody] User? user)
         {
             if (user is null)
@@ -53,9 +62,13 @@ namespace SecretSanta.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] User? user)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult Put(int id, [FromBody] UpdateUser? updatedUser)
         {
-            if (user is null)
+            if (updatedUser is null)
             {
                 return BadRequest();
             }
@@ -63,8 +76,11 @@ namespace SecretSanta.Api.Controllers
             User? foundUser = Repository.GetItem(id);
             if (foundUser is not null)
             {
-                foundUser.FirstName = user.FirstName ?? "";
-                foundUser.LastName = user.LastName ?? "";
+                if (!string.IsNullOrWhiteSpace(updatedUser.FirstName))
+                {
+                    foundUser.FirstName = updatedUser.FirstName ?? "";
+                }
+                foundUser.LastName = updatedUser.LastName ?? "";
 
                 Repository.Save(foundUser);
                 return Ok();
