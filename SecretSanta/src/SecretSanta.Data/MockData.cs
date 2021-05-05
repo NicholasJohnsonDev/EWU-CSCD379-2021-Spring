@@ -7,6 +7,15 @@ namespace SecretSanta.Data
         public static Dictionary<int, User> Users { get; } = new()
         {
             {
+                0,
+                new User
+                {
+                    Id = 0,
+                    FirstName = "Inigo1",
+                    LastName = "Montoya1"
+                }
+            },
+            {
                 1,
                 new User
                 {
@@ -16,7 +25,7 @@ namespace SecretSanta.Data
                 }
             },
             {
-                2, 
+                2,
                 new User
                 {
                     Id = 2,

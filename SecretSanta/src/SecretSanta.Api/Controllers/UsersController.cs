@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using SecretSanta.Business;
 using SecretSanta.Data;
 using SecretSanta.Api.Dto;
+using System.Linq;
 
 namespace SecretSanta.Api.Controllers
 {
@@ -20,26 +21,35 @@ namespace SecretSanta.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<User>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IEnumerable<User> Get()
+        public IEnumerable<UpdateUser> Get()
         {
-            return Repository.List();
+            return Repository.List().Select(user => new UpdateUser
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Id = user.Id
+            });
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
-        public ActionResult<User?> Get(int id)
+        [ProducesResponseType(typeof(UpdateUser), StatusCodes.Status200OK)]
+        public ActionResult<UpdateUser?> Get(int id)
         {
             User? user = Repository.GetItem(id);
             if (user is null) return NotFound();
-            return user;
+            return new UpdateUser()
+            {
+                FirstName = user.FirstName ?? "",
+                LastName = user.LastName ?? "",
+                Id = id
+            };
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Delete(int id)
         {
             if (Repository.Remove(id))
@@ -51,24 +61,39 @@ namespace SecretSanta.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
-        public ActionResult<User?> Post([FromBody] User? user)
+        [ProducesResponseType(typeof(UpdateUser), StatusCodes.Status200OK)]
+        public ActionResult<UpdateUser?> Post([FromBody] UpdateUser? UpdateUser)
         {
-            if (user is null)
+            if (UpdateUser is null)
             {
                 return BadRequest();
             }
-            return Repository.Create(user);
+            int id;
+            if (Repository.List().Count == 0)
+            {
+                id = 0;
+            }
+            else
+            {
+                id = (Repository.List().Select(item => item.Id).Max() + 1);
+            }
+            Repository.Create(new User()
+            {
+                FirstName = UpdateUser.FirstName ?? "",
+                LastName = UpdateUser.LastName ?? "",
+                Id = id
+            });
+
+            return UpdateUser;
         }
 
         [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Put(int id, [FromBody] UpdateUser? updatedUser)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult Put(int id, [FromBody] UpdateUser? user)
         {
-            if (updatedUser is null)
+            if (user is null)
             {
                 return BadRequest();
             }
@@ -76,11 +101,8 @@ namespace SecretSanta.Api.Controllers
             User? foundUser = Repository.GetItem(id);
             if (foundUser is not null)
             {
-                if (!string.IsNullOrWhiteSpace(updatedUser.FirstName))
-                {
-                    foundUser.FirstName = updatedUser.FirstName ?? "";
-                }
-                foundUser.LastName = updatedUser.LastName ?? "";
+                foundUser.FirstName = user.FirstName ?? "";
+                foundUser.LastName = user.LastName ?? "";
 
                 Repository.Save(foundUser);
                 return Ok();

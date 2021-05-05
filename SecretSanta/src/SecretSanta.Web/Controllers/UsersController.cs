@@ -1,11 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SecretSanta.Web.Api;
 using SecretSanta.Web.Data;
 using SecretSanta.Web.ViewModels;
-using Microsoft.AspNetCore.Http;
+using SecretSanta.Web.Api;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SecretSanta.Web.Controllers
 {
@@ -20,16 +20,16 @@ namespace SecretSanta.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ICollection<User> users = await Client.GetAllAsync();
+            ICollection<UpdateUser> users = await Client.GetAllAsync();
             List<UserViewModel> viewModelUsers = new();
-            foreach (User user in users)
+            int counter = users.Select(item => item.Id).Max() ?? 0;
+            foreach (UpdateUser user in users)
             {
                 viewModelUsers.Add(new UserViewModel
                 {
-                    Id = user.Id,
+                    Id = user.Id ?? counter,
                     FirstName = user.FirstName,
-                    LastName = user.LastName,
-
+                    LastName = user.LastName
                 });
             }
             return View(viewModelUsers);
@@ -45,14 +45,42 @@ namespace SecretSanta.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await Client.PostAsync(new User
+                await Client.PostAsync(new UpdateUser
                 {
+                    Id = viewModel.Id,
                     FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName
                 });
                 return RedirectToAction(nameof(Index));
             }
+            return View(viewModel);
+        }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            UpdateUser updateUser = await Client.GetAsync(id);
+            UserViewModel userViewModel = new()
+            {
+                Id = id,
+                FirstName = updateUser.FirstName,
+                LastName = updateUser.LastName
+            };
+            return View(userViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await Client.PutAsync(viewModel.Id, new UpdateUser
+                {
+                    Id = viewModel.Id,
+                    FirstName = viewModel.FirstName,
+                    LastName = viewModel.LastName
+                });
+                return RedirectToAction(nameof(Index));
+            }
             return View(viewModel);
         }
 
