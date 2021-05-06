@@ -31,5 +31,10 @@ jobs:
     - name: npm build
       working-directory: ./UserGroup/src/UserGroup.Web/
       run: npm run build:prod
+
+    - name: List Files in Share Views directory
+      working-directory: ./UserGroup/src/UserGroup.Web/
+      run: ls ./Views/Shared
+
     - name: Test
       run: dotnet test --no-build --verbosity normal
