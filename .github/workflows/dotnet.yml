@@ -21,10 +21,7 @@ jobs:
         dotnet-version: 5.0.x
     - name: Get Directory
       run: pwd
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+
     - name: npm install
       working-directory: ./UserGroup/src/UserGroup.Web/
       run: npm install
@@ -32,6 +29,10 @@ jobs:
       working-directory: ./UserGroup/src/UserGroup.Web/
       run: npm run build:prod
 
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
     - name: List Files in Share Views directory
       working-directory: ./UserGroup/src/UserGroup.Web/
       run: ls ./Views/Shared
