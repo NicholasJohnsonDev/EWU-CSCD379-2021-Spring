@@ -25,5 +25,9 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: npm install
+      run: npm install
+    - name: npm build
+      run: npm run build:prod
     - name: Test
       run: dotnet test --no-build --verbosity normal
