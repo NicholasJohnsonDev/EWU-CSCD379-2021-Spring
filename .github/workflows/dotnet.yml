@@ -22,12 +22,11 @@ jobs:
     - name: Get Directory
       run: pwd
 
-    - name: npm install
-      working-directory: ./UserGroup/src/UserGroup.Web/
-      run: npm install
     - name: npm build
       working-directory: ./UserGroup/src/UserGroup.Web/
-      run: npm run build:prod
+      run: 
+        npm install
+        npm run build:prod
 
     - name: Restore dependencies
       run: dotnet restore
