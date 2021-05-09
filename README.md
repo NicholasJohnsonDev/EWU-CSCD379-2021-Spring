@@ -6,7 +6,7 @@ https://secretsanta-nicholasjohnson.azurewebsites.net/
 
 ![](../../workflows/.NET/badge.svg)
 ![](../../workflows/BuildAndTest/badge.svg)
-![](../../workflows/Deploy/badge.svg)
+[](../../workflows/AzureDeploy/badge.svg)
 
 ## Overview
 
