@@ -5,7 +5,6 @@
 https://github.com/NicholasJohnsonDev/EWU-CSCD379-2021-Spring/tree/Assignment6
 https://secretsanta-nicholasjohnson.azurewebsites.net/
 
-![](../../workflows/.NET/badge.svg)
 ![](../../workflows/BuildAndTest/badge.svg)
 ![](../../workflows/AzureDeploy/badge.svg)
 
