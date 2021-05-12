@@ -27,6 +27,8 @@ jobs:
       - name: Get Directory
         run: pwd
 
+
+      # WEB
       - name: npm install
         working-directory: ./SecretSanta/src/SecretSanta.Web/
         run: npm install
@@ -38,17 +40,9 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Build Api
-          working-directory: ./SecretSanta/src/SecretSanta.Api/
-          run: dotnet build --configuration Release
-
       - name: Build Web
         working-directory: ./SecretSanta/src/SecretSanta.Web/
         run: dotnet build --configuration Release
-
-      - name: publish API
-        working-directory: ./SecretSanta/src/SecretSanta.Api/
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/binApiSecretSanta
 
       - name:  publish Web
         working-directory: ./SecretSanta/src/SecretSanta.Web/
@@ -57,15 +51,26 @@ jobs:
       - name: Run Azure webapp deploy action using publish profile credentials
         uses: azure/webapps-deploy@v2
         with:
-          app-name: API-SecretSanta-NicholasJohnson
-          slot-name: Production
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BE1B4441DDE84E4D8AE323ADCCE9B7AD }}
-          package: ${{env.DOTNET_ROOT}}/binApiSecretSanta
-
-      - name: Run Azure webapp deploy action using publish profile credentials
-        uses: azure/webapps-deploy@v2
-        with:
           app-name: SecretSanta-NicholasJohnson
           slot-name: Production
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9E99A13E9CC740CD87E03A21BCE18351 }}
           package: ${{env.DOTNET_ROOT}}/binSecretSanta
+
+
+      # API
+
+      - name: Build Api
+          working-directory: ./SecretSanta/src/SecretSanta.Api/
+          run: dotnet build --configuration Release
+
+      - name: publish API
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/binApiSecretSanta
+
+
+      - name: Run Azure webapp deploy action using publish profile credentials
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: API-SecretSanta-NicholasJohnson
+          slot-name: Production
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BE1B4441DDE84E4D8AE323ADCCE9B7AD }}
+          package: ${{env.DOTNET_ROOT}}/binApiSecretSanta
