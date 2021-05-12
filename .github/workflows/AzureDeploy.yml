@@ -52,7 +52,7 @@ jobs:
         app-name: API-SecretSanta-NicholasJohnson
         slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BE1B4441DDE84E4D8AE323ADCCE9B7AD }}
-        package: ${{env.DOTNET_ROOT}}/myapp
+        package: ${{env.DOTNET_ROOT}}/binApiSecretSanta
 
       - name: Run Azure webapp deploy action using publish profile credentials
         uses: azure/webapps-deploy@v2
