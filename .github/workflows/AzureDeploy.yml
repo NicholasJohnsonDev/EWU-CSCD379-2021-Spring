@@ -39,7 +39,7 @@ jobs:
         run: dotnet restore
 
       - name: Build Api
-          working-directory: ./SecretSanta/src/SecretSanta.Api
+          working-directory: ./SecretSanta/src/SecretSanta.Api/
           run: dotnet build --configuration Release
 
       - name: Build Web
