@@ -3,10 +3,14 @@
 # Assignment 6
 
 https://github.com/NicholasJohnsonDev/EWU-CSCD379-2021-Spring/tree/Assignment6
+<br/>
 https://secretsanta-nicholasjohnson.azurewebsites.net/
+<br/>
 
 ![](../../workflows/BuildAndTest/badge.svg)
+<br/>
 ![](../../workflows/AzureDeploy/badge.svg)
+<br/>
 
 ## Overview
 
