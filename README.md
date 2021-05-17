@@ -1,6 +1,9 @@
-﻿In this assignment we are going to create some automated web tests as well as convert Gifts screens to use AlpineJS instead of the MVC model
+﻿Assingnment 7 - Nicholas Johnson
+
+In this assignment we are going to create some automated web tests as well as convert Gifts screens to use AlpineJS instead of the MVC model
 
 # Assignment
+
 - Using PlaywrightSharp, automate the following items of the website
   - Verify that when landing on the homepage, Secret Santa is displayed in the navigation banner ✔❌
   - Verify that all 3 pages (Users, Groups, Gifts) can be reached via clicking on the navigation elements ✔❌
