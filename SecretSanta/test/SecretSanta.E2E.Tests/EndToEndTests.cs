@@ -9,7 +9,7 @@ namespace SecretSanta.Web.Test
     [TestClass]
     public class EndToEndTests
     {
-        private static WebHostServerFixture<Web.Startup, SecretSanta.Api.Startup> Server;
+        private static WebHostServerFixture<SecretSanta.Web.Startup, SecretSanta.Api.Startup> Server;
 
         [ClassInitialize]
         public static void InitializeClass(TestContext testContext)
