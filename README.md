@@ -1,4 +1,6 @@
-﻿In this assignment we are going to build out some of the logic needed for Secret Santa.
+Nicholas Johnson
+
+In this assignment we are going to build out some of the logic needed for Secret Santa.
 There have been several updates to the SecretSanta repository.
 Key changes to be aware of:
 - The data project has been expanded and contains users for groups and a new Assignment class.
