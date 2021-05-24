@@ -54,9 +54,14 @@ namespace SecretSanta.Business
 
         public AssignmentResult GenerateAssignments(int id)
         {
-            if (MockData.Groups[id].Users.Count() <= 2)
+
+            if (!MockData.Groups.ContainsKey(id))
             {
-                return AssignmentResult.Error("Group minimum is 3 users");
+                return AssignmentResult.Error("Group not found");
+            }
+            else if (MockData.Groups[id].Users.Count() <= 2)
+            {
+                return AssignmentResult.Error("Group Group must have at least three users");
             }
 
 

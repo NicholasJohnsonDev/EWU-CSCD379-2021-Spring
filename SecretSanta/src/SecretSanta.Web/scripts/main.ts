@@ -49,6 +49,7 @@ export function setupUsers() {
                 this.users = await client.getAll() || [];
             } catch (error) {
                 console.log(error);
+                alert("Error while loading users: " + error);
             }
         }
     }
@@ -64,6 +65,7 @@ export function createOrUpdateUser() {
                 window.location.href = '/users';
             } catch (error) {
                 console.log(error);
+                alert("Error while creating user: " + error);
             }
         },
         async update() {
@@ -73,6 +75,7 @@ export function createOrUpdateUser() {
                 window.location.href = '/users';
             } catch (error) {
                 console.log(error);
+                alert("Error while updating user: " + error);
             }
         },
         async loadData() {
@@ -83,6 +86,7 @@ export function createOrUpdateUser() {
                 this.user = await client.get(+id);
             } catch (error) {
                 console.log(error);
+                alert("Error while loading user: " + error);
             }
         }
     }
@@ -108,6 +112,7 @@ export function setupGroups() {
                 this.groups = await client.getAll() || [];
             } catch (error) {
                 console.log(error);
+                alert("Error while loading group: " + error);
             }
         }
     }
@@ -128,6 +133,7 @@ export function createOrUpdateGroup() {
                 window.location.href = '/groups';
             } catch (error) {
                 console.log(error);
+                alert("Error while creating group: " + error);
             }
         },
         edit() {
@@ -141,6 +147,7 @@ export function createOrUpdateGroup() {
                 await this.loadGroup();
             } catch (error) {
                 console.log(error);
+                alert("Error while updating group: " + error);
             }
         },
         async loadData() {
@@ -159,7 +166,7 @@ export function createOrUpdateGroup() {
                     });
                 }
             } catch (error) {
-                console.log(error);
+                alert("Error while loading group: " + error);
             }
         },
         async loadUsers() {
@@ -172,6 +179,7 @@ export function createOrUpdateGroup() {
                 }
             } catch (error) {
                 console.log(error);
+                alert("Error while loading user: " + error);
             }
         },
         async removeFromGroup(currentGroup: Group, user: User) {
@@ -181,6 +189,7 @@ export function createOrUpdateGroup() {
                     await client.remove(currentGroup.id, user.id);
                 } catch (error) {
                     console.log(error);
+                    alert("Error while removing user from group: " + error);
                 }
                 await this.loadGroup();
             }
@@ -192,6 +201,7 @@ export function createOrUpdateGroup() {
                 await client.add(currentGroupId, this.selectedUserId);
             } catch (error) {
                 console.log(error);
+                alert("Error while adding user to group: " + error)
             }
             await this.loadGroup();
         },
@@ -206,6 +216,7 @@ export function createOrUpdateGroup() {
                 }
             } catch (error) {
                 console.log(error);
+                alert("Error while assigning recievers to givers: " + error)
             }
         },
         async generateAssignments(group: Group){
@@ -214,6 +225,7 @@ export function createOrUpdateGroup() {
                 await client.generateAssignments(group.id);
             }catch(error){
                 console.log(error);
+                alert("Error while assigning recievers to givers: " + error)
             }
             await this.loadGroup();
         }
