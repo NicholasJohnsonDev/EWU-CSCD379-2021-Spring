@@ -8,12 +8,12 @@ import { fas, faThList } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
-import { Group, GroupsClient, User, UsersClient } from '../Api/SecretSanta.Api.Client.g';
+import { Group, GroupsClient, User, UsersClient, Assignment } from '../Api/SecretSanta.Api.Client.g';
 
 library.add(fas, far, fab);
 dom.watch();
 
-declare var apiHost : string;
+declare var apiHost: string;
 
 export function setupNav() {
     return {
@@ -61,7 +61,7 @@ export function createOrUpdateUser() {
             try {
                 const client = new UsersClient(apiHost);
                 await client.post(this.user);
-                window.location.href='/users';
+                window.location.href = '/users';
             } catch (error) {
                 console.log(error);
             }
@@ -70,7 +70,7 @@ export function createOrUpdateUser() {
             try {
                 const client = new UsersClient(apiHost);
                 await client.put(this.user.id, this.user);
-                window.location.href='/users';
+                window.location.href = '/users';
             } catch (error) {
                 console.log(error);
             }
@@ -119,7 +119,7 @@ export function createOrUpdateGroup() {
         allUsers: [] as User[],
         selectedUserId: 0,
         isEditing: false,
-        generationError: "",
+        recipients: [] as string[],
 
         async create() {
             try {
@@ -153,6 +153,11 @@ export function createOrUpdateGroup() {
             try {
                 const client = new GroupsClient(apiHost);
                 this.group = await client.get(+id);
+                if (this.group.assignments.length > 0) {
+                    this.group.users.forEach((u) => {
+                        this.getAssignment(u);
+                    });
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -189,6 +194,27 @@ export function createOrUpdateGroup() {
                 console.log(error);
             }
             await this.loadGroup();
+        },
+        async getAssignment(user: User) {
+            try {
+                if (this.group.assignments.length > 0) {
+                    this.group.assignments.forEach((a) => {
+                        if (a.giver!.firstName == user.firstName && a.giver!.lastName == user.lastName) {
+                            this.recipients[user.id] = a.receiver!.firstName + " " + a.receiver!.lastName;
+                        }
+                    });
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async generateAssignments(group: Group){
+            try{
+                var client = new GroupsClient(apiHost);
+                await client.generateAssignments(group.id);
+            }catch(error){
+                console.log(error);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SecretSanta.Data;
+using System.Linq;
 
 namespace SecretSanta.Business
 {
@@ -34,6 +35,18 @@ namespace SecretSanta.Business
         public bool Remove(int id)
         {
             return MockData.Groups.Remove(id);
+        }
+
+        public AssignmentResult GenerateAssignments(int id)
+        {
+            if (MockData.Groups[id].Users.Count() <= 2)
+                return AssignmentResult.Error("There are not enough users in this group");
+
+            for (int i = 0; i < MockData.Groups[id].Users.Count(); i++)
+            {
+                MockData.Groups[id].Assignments[i] = new(MockData.Groups[id].Users[i], MockData.Groups[id].Users[i]);
+            }
+            return AssignmentResult.Success();
         }
 
         public void Save(Group item)

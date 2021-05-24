@@ -4,22 +4,6 @@ namespace SecretSanta.Data
 {
     public static class MockData
     {
-        static MockData()
-        {
-            PutUserInGroup(Users[1], Groups[1]);
-            PutUserInGroup(Users[2], Groups[1]);
-            PutUserInGroup(Users[3], Groups[2]);
-            PutUserInGroup(Users[4], Groups[2]);
-            PutUserInGroup(Users[5], Groups[1]);
-
-            static void PutUserInGroup(User user, Group group)
-            {
-                user.Groups.Add(group);
-                group.Users.Add(user);
-            }
-        }
-
-
         public static Dictionary<int, User> Users { get; } = new()
         {
             {
@@ -27,8 +11,8 @@ namespace SecretSanta.Data
                 new User
                 {
                     Id = 1,
-                    FirstName = "Inigo",
-                    LastName = "Montoya"
+                    FirstName = "BoJack",
+                    LastName = "Horseman"
                 }
             },
             {
@@ -37,7 +21,7 @@ namespace SecretSanta.Data
                 {
                     Id = 2,
                     FirstName = "Princess",
-                    LastName = "Buttercup"
+                    LastName = "Carolyn"
                 }
             },
             {
@@ -45,8 +29,8 @@ namespace SecretSanta.Data
                 new User
                 {
                     Id = 3,
-                    FirstName = "Prince",
-                    LastName = "Humperdink"
+                    FirstName = "Diane",
+                    LastName = "Nguyen"
                 }
             },
             {
@@ -54,8 +38,8 @@ namespace SecretSanta.Data
                 new User
                 {
                     Id = 4,
-                    FirstName = "Count",
-                    LastName = "Rugen"
+                    FirstName = "Mr.",
+                    LastName = "Peanutbutter"
                 }
             },
             {
@@ -63,8 +47,26 @@ namespace SecretSanta.Data
                 new User
                 {
                     Id = 5,
-                    FirstName = "Miracle",
-                    LastName = "Max"
+                    FirstName = "Todd",
+                    LastName = "Chavez"
+                }
+            },
+            {
+                6,
+                new User
+                {
+                    Id = 6,
+                    FirstName = "Charley",
+                    LastName = "Witherspoon"
+                }
+            },
+            {
+                7,
+                new User
+                {
+                    Id = 7,
+                    FirstName = "Judah",
+                    LastName = "Mannowdog"
                 }
             }
         };
@@ -76,7 +78,7 @@ namespace SecretSanta.Data
                 new Group
                 {
                     Id = 1,
-                    Name = "IntelliTect Christmas Party"
+                    Name = "Princess and Judah Wedding"
                 }
             },
             {
@@ -84,9 +86,27 @@ namespace SecretSanta.Data
                 new Group
                 {
                     Id = 2,
-                    Name = "Friends"
+                    Name = "The Lonely One Person Exchange"
                 }
             }
         };
+
+        static MockData()
+        {
+            PutUserInGroup(Users[1], Groups[1]);
+            PutUserInGroup(Users[2], Groups[1]);
+            PutUserInGroup(Users[3], Groups[1]);
+            PutUserInGroup(Users[4], Groups[1]);
+            PutUserInGroup(Users[5], Groups[1]);
+            PutUserInGroup(Users[6], Groups[1]);
+            PutUserInGroup(Users[7], Groups[1]);
+            PutUserInGroup(Users[1], Groups[2]);
+
+            static void PutUserInGroup(User user, Group group)
+            {
+                user.Groups.Add(group);
+                group.Users.Add(user);
+            }
+        }
     }
 }

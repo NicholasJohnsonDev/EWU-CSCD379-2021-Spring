@@ -3,8 +3,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label class="text-gray-500 font-bold text-right" for="Name">Name</label>
-                <input class="w-full border-b-2 border-green-300 focus:border-green-600 focus:ring-transparent focus:outline-none" type="text" id="Name" name="Name" x-model="group.name" />
-                <button class="border-2 bg-green-400 border-green-800 hover:bg-green-600 py-2 px-4 rounded-xl mr-3" @@click="update()">Update</button>
+                <input
+                    class="w-full border-b-2 border-green-300 focus:border-green-600 focus:ring-transparent focus:outline-none"
+                    type="text" id="Name" name="Name" x-model="group.name" />
+                <button class="border-2 bg-green-400 border-green-800 hover:bg-green-600 py-2 px-4 rounded-xl mr-3"
+                    @@click="update()">Update</button>
             </div>
         </div>
     </div>
@@ -13,7 +16,8 @@
             <div>
                 <label class="text-gray-500 font-bold text-right" for="Name">Name:</label>
                 <span x-text="group.name"></span>
-                <button class="border-1 bg-green-200 border-green-600 hover:bg-green-400 py-2 px-4 rounded-xl mr-3" @@click="edit()">Edit</button>
+                <button class="border-1 bg-green-200 border-green-600 hover:bg-green-400 py-2 px-4 rounded-xl mr-3"
+                    @@click="edit()">Edit</button>
             </div>
         </div>
     </div>
@@ -21,24 +25,30 @@
         <div class="w-full sm:w-2/3">
             <section class="border-gray-500 border-2 p-6 m-5 rounded-xl flex flex-row justify-between">
                 <div class="grid grid-cols-3 sm:grid-cols-2 gap-4">
-                    <div class="inline-block col-span-2"><span x-text="`${user.firstName} ${user.lastName}`"></span></div>
-                    <button class="-mt-6 col-start-3 content-end" @@click.prevent="removeFromGroup(group, user)"><i class="fas fa-trash text-gray-700 hover:text-red-700"></i></button>
+                    <div class="inline-block col-span-2"><span x-text="`${user.firstName} ${user.lastName}`"></span>
+                    </div>
+                    <button class="-mt-6 col-start-3 content-end" @@click.prevent="removeFromGroup(group, user)"><i
+                            class="fas fa-trash text-gray-700 hover:text-red-700"></i></button>
                     <div class="col-span-2">
                         <i class="fas fa-gift text-gray-700"></i>
                         <i class="fas fa-arrow-right text-gray-700"></i>
-                        <span x-text="getAssignment(user)"></span>
+                        @* <span x-text="getAssignment(user, group)"></span> *@
                     </div>
                 </div>
             </section>
         </div>
     </template>
+    <button class="border-1 bg-green-200 border-green-600 hover:bg-green-400 py-2 px-4 rounded-xl mr-3"
+        @@click="generateAssignments(group)">Generate Assignments</button>
     <div>
         <select x-model="selectedUserId" class="w-full sm:w-1/3">
             <template x-for="user in allUsers" :key="user">
                 <option key="user.id" :value="user.id" x-text="`${user.firstName} ${user.lastName}`"></option>
             </template>
         </select>
-        <button class="border-1 bg-green-200 border-green-600 hover:bg-green-400 py-2 px-4 rounded-xl mr-3" @@click="addToGroup(group.id)">Add</button>
+        <button class="border-1 bg-green-200 border-green-600 hover:bg-green-400 py-2 px-4 rounded-xl mr-3"
+            @@click="addToGroup(group.id)">Add</button>
     </div>
-    <a class="inline-block border-2 bg-white border-green-400 hover:border-green-600 py-2 px-4 rounded-xl" asp-controller="Groups" asp-action="Index">Close</a>
+    <a class="inline-block border-2 bg-white border-green-400 hover:border-green-600 py-2 px-4 rounded-xl"
+        asp-controller="Groups" asp-action="Index">Close</a>
 </section>
