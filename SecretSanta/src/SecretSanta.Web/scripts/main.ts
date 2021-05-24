@@ -215,6 +215,7 @@ export function createOrUpdateGroup() {
             }catch(error){
                 console.log(error);
             }
+            await this.loadGroup();
         }
     }
 }
