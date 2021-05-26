@@ -113,9 +113,29 @@ namespace SecretSanta.Business.Tests
         }
 
         [TestMethod]
-        public void GenerateAssignments_WithInvalidId_ReturnsError()
+        public void GenerateAssignments_WithNullId_ReturnsError()
         {
             GroupRepository sut = new();
+
+            AssignmentResult result = sut.GenerateAssignments(42);
+
+            Assert.AreEqual("Group not found", result.ErrorMessage);
+        }
+
+        [TestMethod]
+        public void GenerateAssignments_WithInvalidId_CreatesAssignments()
+        {
+            GroupRepository sut = new();
+            Group group = sut.Create(new()
+            {
+                Id = 58961,
+                Name = "Characters From a TV Show"
+            });
+            group.Users.Add(new User { Id = 1, FirstName = "BoJack", LastName = "Horseman" });
+            group.Users.Add(new User { Id = 2, FirstName = "Princess", LastName = "Carolyn" });
+            group.Users.Add(new User { Id = 3, FirstName = "Diane", LastName = "Nguyen" });
+            group.Users.Add(new User { Id = 4, FirstName = "Mr.", LastName = "Peanutbutter" });
+            group.Users.Add(new User { Id = 5, FirstName = "Todd", LastName = "Chavez" });
 
             AssignmentResult result = sut.GenerateAssignments(42);
 
@@ -144,18 +164,20 @@ namespace SecretSanta.Business.Tests
             Group group = sut.Create(new()
             {
                 Id = 42,
-                Name = "Group"
+                Name = "Characters From a TV Show"
             });
-            group.Users.Add(new User { FirstName = "John", LastName = "Doe" });
-            group.Users.Add(new User { FirstName = "Jane", LastName = "Smith" });
-            group.Users.Add(new User { FirstName = "Bob", LastName = "Jones" });
+            group.Users.Add(new User { Id = 1, FirstName = "BoJack", LastName = "Horseman" });
+            group.Users.Add(new User { Id = 2, FirstName = "Princess", LastName = "Carolyn" });
+            group.Users.Add(new User { Id = 3, FirstName = "Diane", LastName = "Nguyen" });
+            group.Users.Add(new User { Id = 4, FirstName = "Mr.", LastName = "Peanutbutter" });
+            group.Users.Add(new User { Id = 5, FirstName = "Todd", LastName = "Chavez" });
 
             AssignmentResult result = sut.GenerateAssignments(42);
 
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(3, group.Assignments.Count);
-            Assert.AreEqual(3, group.Assignments.Select(x => x.Giver.FirstName).Distinct().Count());
-            Assert.AreEqual(3, group.Assignments.Select(x => x.Receiver.FirstName).Distinct().Count());
+            Assert.AreEqual(5, group.Assignments.Count);
+            Assert.AreEqual(5, group.Assignments.Select(x => x.Giver.FirstName).Distinct().Count());
+            Assert.AreEqual(5, group.Assignments.Select(x => x.Receiver.FirstName).Distinct().Count());
             Assert.IsFalse(group.Assignments.Any(x => x.Giver.FirstName == x.Receiver.FirstName));
         }
     }
