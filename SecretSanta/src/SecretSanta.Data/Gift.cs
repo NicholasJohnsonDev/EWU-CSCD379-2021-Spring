@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SecretSanta.Data
 {
     public class Gift

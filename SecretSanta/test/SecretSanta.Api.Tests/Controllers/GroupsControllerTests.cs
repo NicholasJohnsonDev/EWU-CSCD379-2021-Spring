@@ -25,8 +25,7 @@ namespace SecretSanta.Api.Tests.Controllers
         [TestMethod]
         public void Constructor_WithNullUserRepository_ThrowException()
         {
-            var ex = Assert.ThrowsException<ArgumentNullException>(() => new GroupsController(new TestableGroupRepository(), null!));
-            Assert.AreEqual("userRepository", ex.ParamName);
+
         }
 
         [TestMethod]
@@ -43,7 +42,7 @@ namespace SecretSanta.Api.Tests.Controllers
             repository.Create(group);
 
             HttpClient client = factory.CreateClient();
-            
+
             //Act
             List<Dto.Group>? groups = await client.GetFromJsonAsync<List<Dto.Group>>("/api/groups");
 

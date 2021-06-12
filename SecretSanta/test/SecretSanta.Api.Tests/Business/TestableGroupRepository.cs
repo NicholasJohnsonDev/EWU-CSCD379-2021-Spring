@@ -5,7 +5,7 @@ using SecretSanta.Data;
 
 namespace SecretSanta.Api.Tests.Business
 {
-    internal class TestableGroupRepository : IGroupRepository
+    internal class TestableGroupRepository
     {
         private Dictionary<int, Group> Groups { get; } = new();
 

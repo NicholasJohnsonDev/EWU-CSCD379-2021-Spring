@@ -13,9 +13,10 @@ namespace SecretSanta.Api.Tests
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.ConfigureServices(services => {
+            builder.ConfigureServices(services =>
+            {
                 services.AddScoped<IUserRepository, TestableUserRepository>(_ => UserRepository);
-                services.AddScoped<IGroupRepository, TestableGroupRepository>(_ => GroupRepository);
+                services.AddScoped<TestableGroupRepository>(_ => GroupRepository);
             });
         }
     }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using DbContext = SecretSanta.Data.DbContext;
 
 namespace SecretSanta.Data
@@ -15,12 +16,12 @@ namespace SecretSanta.Data
             : base(new DbContextOptionsBuilder<DbContext>().UseSqlite("Data Source=main.db").Options)
         { }
 
-        public DbSet<User> Users => Set<User>();
         public DbSet<Group> Groups => Set<Group>();
+        public DbSet<User> Users => Set<User>();
+        public DbSet<GroupUser> GroupUsers => Set<GroupUser>();
+        public DbSet<GroupAssignment> GroupAssignments => Set<GroupAssignment>();
+        public DbSet<Assignment> Assignments => Set<Assignment>();
         public DbSet<Gift> Gifts => Set<Gift>();
-
-        private StreamWriter LogStream { get; } = new StreamWriter("dblog.txt", append: true);
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (modelBuilder is null)
@@ -28,8 +29,10 @@ namespace SecretSanta.Data
                 throw new ArgumentNullException(nameof(modelBuilder));
             }
 
-            modelBuilder.Entity<User>()
-                .HasAlternateKey(User => new { User.FirstName, User.LastName });
+            modelBuilder.Entity<Group>().HasIndex(item => new { item.Name }).IsUnique();
+            modelBuilder.Entity<GroupUser>().HasKey(item => new { item.GroupId, item.UserId });
+            modelBuilder.Entity<GroupAssignment>().HasKey(item => new { item.GroupId, item.AssignmentId });
+            modelBuilder.Entity<Assignment>().HasAlternateKey(item => new { item.GiverId, item.ReceiverId });
         }
     }
 }
